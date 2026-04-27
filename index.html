@@ -26,26 +26,71 @@
 
 //-----------задание 2
 
+//         async function getPostsWithComments (count) {
+//             const headersPosts = await fetch('https://jsonplaceholder.typicode.com/posts');
+//             posts = await headersPosts.json();
+//             filterPosts = posts.filter(post => post.id <= count)
+//             // console.log(filterPosts)
+
+//             const headerComments = await fetch('https://jsonplaceholder.typicode.com/comments');
+//             const comments = await headerComments.json();
+//             // console.log(comments)
+            
+//             let result = filterPosts.map((post)=>{
+//                 const arrOfComments = [];
+//                 for(let comment of comments) {
+//                     if (comment.postId === post.id) {
+//                         // console.log(comment);
+//                         arrOfComments.push(comment);
+//                     }
+//                     post = {...post, arrOfComments};
+//                 }
+//                 // console.log(post);
+//                 return post;
+//             })
+
+//             return result;
+
+//         }
+        
+// getPostsWithComments(5).then(console.log);
+// getPostsWithComments(7).then(console.log);
+// getPostsWithComments(9).then(console.log);
+
+//---------задание 3
+
+
         async function getPostsWithComments (count) {
             const headersPosts = await fetch('https://jsonplaceholder.typicode.com/posts');
             posts = await headersPosts.json();
             filterPosts = posts.filter(post => post.id <= count)
-            // console.log(filterPosts)
+            
 
             const headerComments = await fetch('https://jsonplaceholder.typicode.com/comments');
             const comments = await headerComments.json();
-            // console.log(comments)
+            
+            
+            const headerUsers = await fetch('https://jsonplaceholder.typicode.com/users');
+            const users = await headerUsers.json();
+
+
+
             
             let result = filterPosts.map((post)=>{
                 const arrOfComments = [];
                 for(let comment of comments) {
                     if (comment.postId === post.id) {
-                        // console.log(comment);
+                        
                         arrOfComments.push(comment);
                     }
                     post = {...post, arrOfComments};
                 }
-                // console.log(post);
+                for(let user of users){
+                    if(user.id === post.userId) {
+                        post = {...post, user}
+                    }
+                }
+                
                 return post;
             })
 
@@ -53,9 +98,8 @@
 
         }
         
-getPostsWithComments(5).then(console.log);
-getPostsWithComments(7).then(console.log);
-getPostsWithComments(9).then(console.log);
+getPostsWithComments(33).then(console.log);
+
 
 
     
