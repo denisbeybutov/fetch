@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: grey;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+//----------задание 1
+        // async function getPost(n) {
+        //     const listPosts = await fetch('https://jsonplaceholder.typicode.com/posts');
+        //     const posts = await listPosts.json();            
+        //     filterPosts = posts.filter(post => post.id <= n);            
+        //     return console.log(filterPosts);
+        // }
+        
+        // getPost(4);        
+        // getPost(7);
+
+//-----------задание 2
+
+        async function getPostsWithComments (count) {
+            const headersPosts = await fetch('https://jsonplaceholder.typicode.com/posts');
+            posts = await headersPosts.json();
+            filterPosts = posts.filter(post => post.id <= count)
+            // console.log(filterPosts)
+
+            const headerComments = await fetch('https://jsonplaceholder.typicode.com/comments');
+            const comments = await headerComments.json();
+            // console.log(comments)
+            
+            let result = filterPosts.map((post)=>{
+                const arrOfComments = [];
+                for(let comment of comments) {
+                    if (comment.postId === post.id) {
+                        // console.log(comment);
+                        arrOfComments.push(comment);
+                    }
+                    post = {...post, arrOfComments};
+                }
+                // console.log(post);
+                return post;
+            })
+
+            return result;
+
+        }
+        
+getPostsWithComments(5).then(console.log);
+
+    
+
+    </script>
+</body>
+</html>
